@@ -1,0 +1,48 @@
+
+Select * from Alumno where Alumno.Matricula = (select Matricula from Alumno where  Matricula = '1111121')
+Select * from Alumno where Matricula not in (select Matricula from Alumno where nombre = 'alicia');
+Select * from Alumno where FechaDeIngreso = '2017-08-06' and Matricula = any (select Matricula from Alumno where Matricula = '1111121');
+Select  count(matricula) from alumno
+where matricula > 111
+
+create view DomicilioAlumno as
+Select CONCAT (Nombre,' ', ApellidoP, ' ', ApellidoM) as Nombre ,
+CONCAT(calle,' #',Numero) as domicilio from Alumno, Direccion
+where alumno.iddireccion = direccion.iddireccion
+
+create view DomicilioMaestro as
+Select CONCAT (Nombre,' ', ApellidoP, ' ', ApellidoM) as Nombre ,
+CONCAT(calle,' #',Numero) as domicilio from Maestro, Direccion
+where Maestro.iddireccion = direccion.iddireccion
+
+select Matricula, Nombre, Numero from Alumno left join direccion on Alumno.IdDireccion = Direccion.IdDireccion
+
+create view DomicilioColonia as
+Select CONCAT (Calle,' ', Numero) as Direccion,
+Colonia.Nombre as Colonia from Direccion, Colonia
+where Colonia.IdColonia = Direccion.IdColonia
+
+create view Domicilio as
+Select Alumno.Matricula,
+Colonia.Nombre as Colonia,
+CONCAT (Calle,' ', Numero) as Direccion,
+Municipio.Nombre as Municipio,
+Estado.Nombre 
+from Direccion, Colonia,Municipio, Estado, Alumno
+where Direccion.IdColonia = Colonia.IdColonia and
+Municipio.IdMunicipio = Colonia.IdMunicipio and
+Estado.IdEstado = Municipio.IdEstado and
+ Alumno.IdDireccion = Direccion.IdDireccion
+
+ 
+create view DomicilioDocente as
+Select Maestro.NoEmpleado,
+Colonia.Nombre as Colonia,
+CONCAT (Calle,' ', Numero) as Direccion,
+Municipio.Nombre as Municipio,
+Estado.Nombre 
+from Direccion, Colonia,Municipio, Estado, Maestro
+where Direccion.IdColonia = Colonia.IdColonia and
+Municipio.IdMunicipio = Colonia.IdMunicipio and
+Estado.IdEstado = Municipio.IdEstado and
+ Maestro.IdDireccion = Direccion.IdDireccion
