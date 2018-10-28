@@ -1,0 +1,37 @@
+CREATE PROCEDURE ProcDomicilioAlumno as
+Select Alumno.Matricula,
+Colonia.Nombre as Colonia,
+CONCAT (Calle,' ', Numero) as Direccion,
+Municipio.Nombre as Municipio,
+Estado.Nombre 
+from Direccion, Colonia,Municipio, Estado, Alumno
+where Direccion.IdColonia = Colonia.IdColonia and
+Municipio.IdMunicipio = Colonia.IdMunicipio and
+Estado.IdEstado = Municipio.IdEstado and
+Alumno.IdDireccion = Direccion.IdDireccion
+
+exec ProcDomicilioAlumno
+
+create proc ProcDomicilioDocente as
+Select Maestro.NoEmpleado,
+Colonia.Nombre as Colonia,
+CONCAT (Calle,' ', Numero) as Direccion,
+Municipio.Nombre as Municipio,
+Estado.Nombre 
+from Direccion, Colonia,Municipio, Estado, Maestro
+where Direccion.IdColonia = Colonia.IdColonia and
+Municipio.IdMunicipio = Colonia.IdMunicipio and
+Estado.IdEstado = Municipio.IdEstado and
+Maestro.IdDireccion = Direccion.IdDireccion
+
+exec ProcDomicilioDocente
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+Create view InfoMateria as 
+select Materia.Nombre as Materia,Carrera.Nombre as Carrera, NoPlan as Plann from MateriaCarrera, Carrera,Materia
+where materiaCarrera.IdCarrera = Carrera.IdCarrera and Materia.IdMateria = MateriaCarrera.IdMateria
+
+create proc InfoMateriaproc as
+select Materia.Nombre as Materia,Carrera.Nombre as Carrera, NoPlan as Plann from MateriaCarrera, Carrera,Materia
+where materiaCarrera.IdCarrera = Carrera.IdCarrera and Materia.IdMateria = MateriaCarrera.IdMateria
