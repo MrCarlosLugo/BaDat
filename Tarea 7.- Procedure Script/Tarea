@@ -35,3 +35,38 @@ where materiaCarrera.IdCarrera = Carrera.IdCarrera and Materia.IdMateria = Mater
 create proc InfoMateriaproc as
 select Materia.Nombre as Materia,Carrera.Nombre as Carrera, NoPlan as Plann from MateriaCarrera, Carrera,Materia
 where materiaCarrera.IdCarrera = Carrera.IdCarrera and Materia.IdMateria = MateriaCarrera.IdMateria
+
+Create view ListaDeAlumnosView as
+Select Alumno.Matricula,Carrera.Nombre as Carrera,Materia.Nombre as Materia, Horario.HoraInicio,Salon.Numero from Listado,Alumno,Carrera,Horario,Clase,HorarioDeClase, Materia,Maestro,Periodos,Salon,MateriaCarrera
+where Horario.IdHorario = HorarioDeClase.IdHorario and
+Maestro.NoEmpleado = clase.NoEmpleado and 
+Horario.IdHorario = HorarioDeClase.IdHorario and 
+HorarioDeClase.IdPeriodo = Periodos.IdPeriodo and
+Clase.IdClase = HorarioDeClase.IdClase and
+Materia.IdMateria = MateriaCarrera.idMateria and 
+Salon.IdSalon = Clase.IdSalon and
+Clase.IdClase = Listado.IdClase and
+carrera.IdCarrera = MateriaCarrera.IdCarrera and
+Clase.IdMateriaCarrera = MateriaCarrera.IdMateriaCarrera and 
+Listado.Matricula=Alumno.Matricula;
+
+create View MateriasLsti As
+Select Materia.Nombre as Materia, Carrera.Nombre as Carrera
+FROM (	(MateriaCarrera INNER JOIN Carrera ON Carrera.IdCarrera = MateriaCarrera.IdCarrera)
+INNER JOIN Materia ON Materia.IdMateria = MateriaCarrera.IdMateria
+)
+where Carrera.IdCarrera =1; 
+
+Create view InfoMateriasview AS
+select Maestro.Nombre +' '+ ApellidoP + ' '+  ApellidoM as Maestro, Materia.Nombre as Materia,Salon.Numero as salon,Horario.Nombre as Horario, Inicio +' - ' + Final as Periodo
+from Maestro,Materia,Salon,Horario,Periodos,Clase, HorarioDeClase, Carrera,MateriaCarrera 
+where 
+Maestro.NoEmpleado = clase.NoEmpleado and 
+Horario.IdHorario = HorarioDeClase.IdHorario and 
+HorarioDeClase.IdPeriodo = Periodos.IdPeriodo and
+Clase.IdClase = HorarioDeClase.IdClase and
+Materia.IdMateria = MateriaCarrera.idMateria and 
+Salon.IdSalon = Clase.IdSalon and
+carrera.IdCarrera = MateriaCarrera.IdCarrera and
+Clase.IdMateriaCarrera = MateriaCarrera.IdMateriaCarrera;
+; 
