@@ -1,0 +1,7 @@
+create view ViewMateriasLsti as
+select NoPlan as PlanDeEstudio, Materia.Nombre as Materia, Carrera.Nombre as carrera, MateriaCarrera.Semestre  from MateriaCarrera, Materia, Carrera
+where MateriaCarrera.IdMateria = Materia.IdMateria and Carrera.IdCarrera = MateriaCarrera.IdCarrera and Carrera.IdCarrera = 1
+
+create proc ProcMateriasLcc as
+select NoPlan as PlanDeEstudio, Materia.Nombre as Materia, Carrera.Nombre as carrera, MateriaCarrera.Semestre  from MateriaCarrera, Materia, Carrera
+where MateriaCarrera.IdMateria = Materia.IdMateria and Carrera.IdCarrera = MateriaCarrera.IdCarrera and Carrera.IdCarrera = 2
